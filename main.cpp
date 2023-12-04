@@ -3,10 +3,9 @@
 #include <sstream>
 #include <vector>
 #include <string>
-#include <utility>
 #include "bryHashMap.h"
-#include "ALBTree.h"
-#include "matplotlib-cpp/matplotlibcpp.h"
+#include "ALBTree.cpp"
+#include "RBTree.cpp"
 using namespace std;
 
 
@@ -32,7 +31,7 @@ vector<string> split(const string& line, char delim){
 }
 
 //parse the CSV and hold the data in a vector
-void parseCSV(const string& filename, vector<crashData>& crashdata, bHash& crashDataMap) {
+void parseCSV(const string& filename, vector<crashData>& crashdata, bHash& crashDataMap, RBTree& RbtreeData) {
     ifstream file(filename);
     if (!file.is_open()) {
         cout << "file can't open: error" << endl;
@@ -54,7 +53,7 @@ void parseCSV(const string& filename, vector<crashData>& crashdata, bHash& crash
 
                 crashdata.push_back(data);  // Add data to the vector
                 crashDataMap.AddItem(data.caseNumber, data.latitude, data.longitude, data.totalVehicle, data.crashDay);  // Add data to the hashmap
-                //bTree.insert(data.caseNumber, data);
+                RbtreeData.insert(data.caseNumber, data.latitude, data.longitude, data.totalVehicle);
             } catch (const exception& e) {
                 continue;  // Skip to the next line if there's an error
             }
@@ -70,8 +69,8 @@ int main() {
     string filename = "Traffic_Crashes.csv";
     vector<crashData> crashdata;
     bHash crashDataMap;
-    parseCSV(filename, crashdata, crashDataMap);
-    //BTree<int, crashData> bTree(50);
+    RBTree RbtreeData;
+    parseCSV(filename, crashdata, crashDataMap, RbtreeData);
 
 //     Print the data from the vector (retaining original functionality)
 //    for (const auto& data : crashdata) {
@@ -86,9 +85,9 @@ int main() {
     crashDataMap.FindLatLon(216018195);
     crashDataMap.FindLatLon(220006661);
     crashDataMap.FindLatLon(220012025);
-//    int searchKey =216018195;
-//
-//
+    NodePtr resultNode = RbtreeData.searchTree(216019195);
+    cout << get<0>(resultNode->values) << " " << get<1>(resultNode->values) << endl;
+
 //     Optionally, you can interact with the crashDataMap hashmap as needed
 //     Example: crashDataMap.PrintTable();
 //
