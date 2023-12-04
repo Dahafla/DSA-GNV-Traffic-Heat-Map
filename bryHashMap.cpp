@@ -13,7 +13,7 @@ bHash::bHash() {
         hashTable[i]->caseNumber = 0;
         hashTable[i]->latitude = 0;
         hashTable[i]->longitude = 0;
-        hashTable[i]->totalPeople = 0;
+        hashTable[i]->totalVehicle = 0;
         hashTable[i]->crashDay = "empty";
         hashTable[i]->next = nullptr;
     }
@@ -37,7 +37,7 @@ void bHash::PrintItemsInBucket(int bucket) {
             cout << ptr->caseNumber << endl;
             cout << ptr->latitude << endl;
             cout << ptr->longitude << endl;
-            cout << ptr->totalPeople << endl;
+            cout << ptr->totalVehicle << endl;
             cout << ptr->crashDay << endl;
             cout << "----------------------\n";
             ptr = ptr->next;
@@ -104,7 +104,7 @@ void bHash::FindLatLon(int caseNumber) {
 }
 
 // Adds item into the hashmap
-void bHash::AddItem(int caseNumber, double latitude, double longitude, int totalPeople, string crashDay) {
+void bHash::AddItem(int caseNumber, double latitude, double longitude, int totalVehicle, string crashDay) {
 
     int bucket = Hash(caseNumber);
 
@@ -113,7 +113,7 @@ void bHash::AddItem(int caseNumber, double latitude, double longitude, int total
         hashTable[bucket]->caseNumber = caseNumber;
         hashTable[bucket]->latitude = latitude;
         hashTable[bucket]->longitude = longitude;
-        hashTable[bucket]->totalPeople = totalPeople;
+        hashTable[bucket]->totalVehicle = totalVehicle;
         hashTable[bucket]->crashDay = crashDay;
     }
     else
@@ -123,7 +123,7 @@ void bHash::AddItem(int caseNumber, double latitude, double longitude, int total
         n->caseNumber = caseNumber;
         n->latitude = latitude;
         n->longitude = longitude;
-        n->totalPeople = totalPeople;
+        n->totalVehicle = totalVehicle;
         n->crashDay = crashDay;
         n->next = nullptr;
         while(ptr->next != nullptr)
@@ -133,25 +133,6 @@ void bHash::AddItem(int caseNumber, double latitude, double longitude, int total
         }
         ptr->next = n;
     }
-}
-
-void bHash::RemoveItem(int caseNumber) {
-    int bucket = Hash(caseNumber);
-
-    crashData* delptr;
-    crashData* p1;
-    crashData* p2;
-
-    // Case 0: Bucket is empty
-
-    // Case 1: 1 item in bucket and the item has a matching name
-
-    // Case 2: Match is located inside the first item in the bucket, but there are
-    // more than 1 items
-
-    // Case 3: Bucket contains items but first item is not a match
-    // Case 3.1: no match
-    // Case 3.2: match is found
 }
 
 // Function to print table and values
@@ -167,7 +148,7 @@ void bHash::PrintTable() {
         cout << hashTable[i]->caseNumber << endl;
         cout << hashTable[i]->latitude << endl;
         cout << hashTable[i]->longitude << endl;
-        cout << hashTable[i]->totalPeople << endl;
+        cout << hashTable[i]->totalVehicle << endl;
         cout << hashTable[i]->crashDay << endl;
         cout << "# of items = " << number << endl;
         cout << "------------------------" << endl;
@@ -180,30 +161,4 @@ int bHash::Hash(int key) {
     return key % 210000000 % tableSize;
 }
 
-//int main(int argc, char** argv) {
-//
-//    bHash Hashy;
-//    string name = "";
-//
-//    Hashy.AddItem("Bry", "coffee");
-//    Hashy.AddItem("Stan", "bugjuice");
-//    Hashy.AddItem("bob", "billyjuice");
-//    Hashy.AddItem("greg", "bombavlat");
-//    Hashy.AddItem("Steve", "boom booom");
-//    Hashy.AddItem("sasha", "OOOO");
-//    Hashy.AddItem("alright man", "bum");
-//    Hashy.AddItem("paula", "yum");
-//    Hashy.AddItem("Izab", "milk");
-//    Hashy.AddItem("Lemonpep", "wings");
-//
-//    while(name != "exit")
-//    {
-//        cout << "Search for ";
-//        cin >> name;
-//        if(name != "exit")
-//        {
-//            Hashy.FindDrink(name);
-//        }
-//    }
-//}
 

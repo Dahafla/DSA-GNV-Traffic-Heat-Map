@@ -5,21 +5,19 @@
 using namespace std;
 
 class bHash {
-private:
+public:
     static const int tableSize = 40;
 
     struct crashData {
         int caseNumber;
         double longitude;
         double latitude;
-        int totalPeople;
+        int totalVehicle;
         string crashDay;
         crashData* next;
     };
 
     crashData* hashTable[tableSize];
-
-public:
     bHash();
     int Hash(int key);
     void AddItem(int caseNumber, double latitude, double longitude, int totalPeople, string crashDay);
