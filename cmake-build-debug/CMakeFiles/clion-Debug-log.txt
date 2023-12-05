@@ -1,0 +1,7 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S /Users/alfahad/Desktop/DSA-GNV-Traffic-Heat-Map -B /Users/alfahad/Desktop/DSA-GNV-Traffic-Heat-Map/cmake-build-debug
+-- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+-- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+Setting matplotplusplus compiler options
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/alfahad/Desktop/DSA-GNV-Traffic-Heat-Map/cmake-build-debug

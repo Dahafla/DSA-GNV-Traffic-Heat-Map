@@ -1,0 +1,44 @@
+Determining if the function sgemm_ exists failed with the following output:
+Change Dir: /Users/alfahad/Desktop/DSA-GNV-Traffic-Heat-Map/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-hX4WaY
+
+Run Build Command(s):/Applications/CLion.app/Contents/bin/ninja/mac/ninja cmTC_e1f27 && [1/2] Building C object CMakeFiles/cmTC_e1f27.dir/CheckFunctionExists.c.o
+[2/2] Linking C executable cmTC_e1f27
+FAILED: cmTC_e1f27 
+: && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DCHECK_FUNCTION_EXISTS=sgemm_ -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/cmTC_e1f27.dir/CheckFunctionExists.c.o -o cmTC_e1f27   && :
+Undefined symbols for architecture arm64:
+  "_sgemm_", referenced from:
+      _main in CheckFunctionExists.c.o
+ld: symbol(s) not found for architecture arm64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+ninja: build stopped: subcommand failed.
+
+
+
+Determining if the __fbufsize exist failed with the following output:
+Change Dir: /Users/alfahad/Desktop/DSA-GNV-Traffic-Heat-Map/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-pstaR1
+
+Run Build Command(s):/Applications/CLion.app/Contents/bin/ninja/mac/ninja cmTC_de93b && [1/2] Building C object CMakeFiles/cmTC_de93b.dir/CheckSymbolExists.c.o
+FAILED: CMakeFiles/cmTC_de93b.dir/CheckSymbolExists.c.o 
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fcolor-diagnostics -MD -MT CMakeFiles/cmTC_de93b.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_de93b.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_de93b.dir/CheckSymbolExists.c.o -c /Users/alfahad/Desktop/DSA-GNV-Traffic-Heat-Map/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-pstaR1/CheckSymbolExists.c
+/Users/alfahad/Desktop/DSA-GNV-Traffic-Heat-Map/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-pstaR1/CheckSymbolExists.c:2:10: fatal error: 'stdio_ext.h' file not found
+#include <stdio_ext.h>
+         ^~~~~~~~~~~~~
+1 error generated.
+ninja: build stopped: subcommand failed.
+
+
+File CheckSymbolExists.c:
+/* */
+#include <stdio_ext.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef __fbufsize
+  return ((int*)(&__fbufsize))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
