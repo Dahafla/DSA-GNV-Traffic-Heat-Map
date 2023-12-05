@@ -27,11 +27,20 @@ private:
         node->color = 0;
     }
 
-    void inOrderHelper(NodePtr node) {
+    void inOrderHelper(NodePtr node, vector<double>& latitudeVec, vector<double>& longitudeVec, vector<double>& totalVehiclesVec) {
         if (node != TNULL) {
-            inOrderHelper(node->left);
-            cout<<node->key<<" ";
-            inOrderHelper(node->right);
+            inOrderHelper(node->left, latitudeVec, longitudeVec, totalVehiclesVec);
+
+            auto values = node->values;
+            double latitude = get<0>(values);
+            double longitude = get<1>(values);
+            double totalVehicles = get<2>(values);
+
+            latitudeVec.push_back(latitude);
+            longitudeVec.push_back(longitude);
+            totalVehiclesVec.push_back(totalVehicles);
+
+            inOrderHelper(node->right, latitudeVec, longitudeVec, totalVehiclesVec);
         }
     }
 
@@ -137,10 +146,8 @@ public:
         root = TNULL;
     }
 
-    // In-Order traversal
-    // Left Subtree -> Node -> Right Subtree
-    void inorder() {
-        inOrderHelper(this->root);
+    void inorder(vector<double>& latitudeVec, vector<double>& longitudeVec, vector<double>& totalVehiclesVec) {
+        inOrderHelper(this->root, latitudeVec, longitudeVec, totalVehiclesVec);
     }
 
     // search the tree for the key k
