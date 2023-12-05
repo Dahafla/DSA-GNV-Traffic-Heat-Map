@@ -14,7 +14,6 @@ bHash::bHash() {
         hashTable[i]->latitude = 0;
         hashTable[i]->longitude = 0;
         hashTable[i]->totalVehicle = 0;
-        hashTable[i]->crashDay = "empty";
         hashTable[i]->next = nullptr;
     }
 }
@@ -38,7 +37,6 @@ void bHash::PrintItemsInBucket(int bucket) {
             cout << ptr->latitude << endl;
             cout << ptr->longitude << endl;
             cout << ptr->totalVehicle << endl;
-            cout << ptr->crashDay << endl;
             cout << "----------------------\n";
             ptr = ptr->next;
         }
@@ -104,7 +102,7 @@ void bHash::FindLatLon(int caseNumber) {
 }
 
 // Adds item into the hashmap
-void bHash::AddItem(int caseNumber, double latitude, double longitude, int totalVehicle, string crashDay) {
+void bHash::AddItem(int caseNumber, double latitude, double longitude, int totalVehicle) {
 
     int bucket = Hash(caseNumber);
 
@@ -114,7 +112,6 @@ void bHash::AddItem(int caseNumber, double latitude, double longitude, int total
         hashTable[bucket]->latitude = latitude;
         hashTable[bucket]->longitude = longitude;
         hashTable[bucket]->totalVehicle = totalVehicle;
-        hashTable[bucket]->crashDay = crashDay;
     }
     else
     {
@@ -124,7 +121,6 @@ void bHash::AddItem(int caseNumber, double latitude, double longitude, int total
         n->latitude = latitude;
         n->longitude = longitude;
         n->totalVehicle = totalVehicle;
-        n->crashDay = crashDay;
         n->next = nullptr;
         while(ptr->next != nullptr)
         {
@@ -149,7 +145,6 @@ void bHash::PrintTable() {
         cout << hashTable[i]->latitude << endl;
         cout << hashTable[i]->longitude << endl;
         cout << hashTable[i]->totalVehicle << endl;
-        cout << hashTable[i]->crashDay << endl;
         cout << "# of items = " << number << endl;
         cout << "------------------------" << endl;
     }

@@ -13,14 +13,13 @@ public:
         double longitude;
         double latitude;
         int totalVehicle;
-        string crashDay;
         crashData* next;
     };
 
     crashData* hashTable[tableSize];
     bHash();
     int Hash(int key);
-    void AddItem(int caseNumber, double latitude, double longitude, int totalPeople, string crashDay);
+    void AddItem(int caseNumber, double latitude, double longitude, int totalPeople);
     void RemoveItem(int caseNumber);
     int NumberOfItemsInBucket(int bucket);
     void PrintTable();
