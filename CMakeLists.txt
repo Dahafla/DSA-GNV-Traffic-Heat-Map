@@ -23,3 +23,4 @@ add_executable(DSA_GNV_Traffic_Heat_Map
         RBTree.cpp)
 
 target_link_libraries(DSA_GNV_Traffic_Heat_Map PUBLIC matplot)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
