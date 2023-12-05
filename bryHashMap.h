@@ -20,11 +20,8 @@ public:
     bHash();
     int Hash(int key);
     void AddItem(int caseNumber, double latitude, double longitude, int totalPeople);
-    void RemoveItem(int caseNumber);
     int NumberOfItemsInBucket(int bucket);
     void PrintTable();
-    void PrintItemsInBucket(int index);
-    void FindLatLon(int caseNumber);
     int GetTotalItems();
 };
 

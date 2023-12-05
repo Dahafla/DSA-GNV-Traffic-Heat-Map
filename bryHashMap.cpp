@@ -18,31 +18,6 @@ bHash::bHash() {
     }
 }
 
-// Prints the items within the buckets
-void bHash::PrintItemsInBucket(int bucket) {
-    crashData* ptr = hashTable[bucket];
-
-    if(ptr->caseNumber == 0)
-    {
-        cout << "Bucket = " << bucket << " is empty";
-    }
-    else
-    {
-        cout << "Bucket = " << bucket << " contains the following items\n";
-
-        while(ptr != nullptr)
-        {
-            cout << "----------------------\n";
-            cout << ptr->caseNumber << endl;
-            cout << ptr->latitude << endl;
-            cout << ptr->longitude << endl;
-            cout << ptr->totalVehicle << endl;
-            cout << "----------------------\n";
-            ptr = ptr->next;
-        }
-    }
-}
-
 // Shows number of items in a bucket
 int bHash::NumberOfItemsInBucket(int bucket) {
     int count = 0;
@@ -75,30 +50,6 @@ int bHash::GetTotalItems() {
         }
     }
     return totalItems;
-}
-
-// Function to search in the hashmap for latitude and longitude by case number
-void bHash::FindLatLon(int caseNumber) {
-    int bucket = Hash(caseNumber);
-    bool foundCase = false;
-    double latitude, longitude;
-
-    crashData* ptr = hashTable[bucket];
-    while (ptr != nullptr) {
-        if (ptr->caseNumber == caseNumber) {
-            foundCase = true;
-            latitude = ptr->latitude;
-            longitude = ptr->longitude;
-            break;  // Break the loop once the case is found
-        }
-        ptr = ptr->next;
-    }
-
-    if (foundCase) {
-        cout << "Latitude: " << latitude << ", Longitude: " << longitude << endl;
-    } else {
-        cout << "Case number " << caseNumber << "'s info was not found in the HashTable\n";
-    }
 }
 
 // Adds item into the hashmap

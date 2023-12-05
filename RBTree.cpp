@@ -55,17 +55,6 @@ private:
         return searchTreeHelper(node->right, key);
     }
 
-    void rbTransplant(NodePtr u, NodePtr v){
-        if (u->parent == nullptr) {
-            root = v;
-        } else if (u == u->parent->left){
-            u->parent->left = v;
-        } else {
-            u->parent->right = v;
-        }
-        v->parent = u->parent;
-    }
-
     // fix the red-black tree
     void fixInsert(NodePtr k){
         NodePtr u;
@@ -117,27 +106,8 @@ private:
         root->color = 0;
     }
 
-    void printHelper(NodePtr root, string indent, bool last) {
-        // print the tree structure on the screen
-        if (root != TNULL) {
-            cout<<indent;
-            if (last) {
-                cout<<"R----";
-                indent += "     ";
-            } else {
-                cout<<"L----";
-                indent += "|    ";
-            }
-
-            string sColor = root->color?"RED":"BLACK";
-            cout<<root->key<<"("<<sColor<<")"<<endl;
-            printHelper(root->left, indent, false);
-            printHelper(root->right, indent, true);
-        }
-        // cout<<root->left->data<<endl;
-    }
-
 public:
+    //constructor
     RBTree() {
         TNULL = new Node;
         TNULL->color = 0;
@@ -146,6 +116,7 @@ public:
         root = TNULL;
     }
 
+    //inorder traversal
     void inorder(vector<double>& latitudeVec, vector<double>& longitudeVec, vector<double>& totalVehiclesVec) {
         inOrderHelper(this->root, latitudeVec, longitudeVec, totalVehiclesVec);
     }
@@ -242,12 +213,4 @@ public:
         // Fix the tree
         fixInsert(node);
     }
-
-    // print the tree structure on the screen
-    void prettyPrint() {
-        if (root) {
-            printHelper(this->root, "", true);
-        }
-    }
-
 };

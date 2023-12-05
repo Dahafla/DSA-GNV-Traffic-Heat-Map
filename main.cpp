@@ -21,6 +21,7 @@ struct crashData{
     string crashDay;
 };
 
+//data structure to hold unique coordinates such as longtiudes, and latitudes
 struct uniqueCoords {
     int caseNumber;
     double latitude;
@@ -51,7 +52,7 @@ void parseCSV(const string& filename, vector<crashData>& crashdata, bHash& crash
     string line;
     getline(file, line); // Skip header line
 
-    vector<uniqueCoords> uniqueC;
+    vector<uniqueCoords> uniqueC; //vector for unique data
 
     while (getline(file, line)) {
         vector<string> tokens = split(line, ',');
@@ -82,12 +83,14 @@ void parseCSV(const string& filename, vector<crashData>& crashdata, bHash& crash
         }
     }
 
+    //put the data into hashmaps and red&black tree
     for(auto a: uniqueC){
         crashDataMap.AddItem(a.caseNumber,a.latitude, a.longitude, a.totalVehicleSum);  // Add data to the hashmap
         RbtreeData.insert(a.caseNumber, a.latitude, a.longitude, a.totalVehicleSum);
     }
 }
 
+//create scatter plot using HASHMAP data structure
 void createGraphHash(bHash& crashDataMap){
    vector<double> latitudeVec;
    vector<double> longitudeVec;
@@ -115,7 +118,7 @@ void createGraphHash(bHash& crashDataMap){
     transform(log_totalVehiclesVec.begin(), log_totalVehiclesVec.end(), back_inserter(scaledLogTotalVehiclesVec),
               [](double x) { return x * 0.3; });  // Adjust the scaling factor as needed
 
-    auto c = linspace(1, 10000, totalVehiclesVec.size());
+    auto color = linspace(1, 10, totalVehiclesVec.size());
 
     xlim({-82.1, -82.5});
     ylim({29.5734, 29.75});
@@ -125,12 +128,13 @@ void createGraphHash(bHash& crashDataMap){
     zlabel("Total Vehicles");
     colorbar();
 
-    scatter(longitudeVec, latitudeVec, scaledLogTotalVehiclesVec, c);
-    //save("Images/MapHash.png", "png");
+    scatter(longitudeVec, latitudeVec, scaledLogTotalVehiclesVec, color);
+    save("Images/MapHash.png", "png");
     show();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
+//create scatter plot using RED and BLACK tree
 void createGraphRB(RBTree& RbtreeData) {
     vector<double> latitudeVec;
     vector<double> longitudeVec;
@@ -148,6 +152,7 @@ void createGraphRB(RBTree& RbtreeData) {
     transform(log_totalVehiclesVec.begin(), log_totalVehiclesVec.end(), back_inserter(scaledLogTotalVehiclesVec),
               [](double x) { return x * 0.3; });  // Adjust the scaling factor as needed
 
+    auto color = linspace(1, 10, totalVehiclesVec.size());
     //set parameters
     xlim({-82.1, -82.5});
     ylim({29.5734, 29.75});
@@ -155,13 +160,14 @@ void createGraphRB(RBTree& RbtreeData) {
     xlabel("Longitude");
     ylabel("Latitude");
     zlabel("Total Vehicles");
-    scatter(longitudeVec, latitudeVec, scaledLogTotalVehiclesVec);
+    colorbar();
+    scatter(longitudeVec, latitudeVec, scaledLogTotalVehiclesVec, color);
     save("Images/MapR&B.png", "png");
     show();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-
+//menu takes input from user for which data structure to use
 void menu(bHash& crashDataMap, RBTree& RbtreeData){
     int option;
 
@@ -189,53 +195,18 @@ void menu(bHash& crashDataMap, RBTree& RbtreeData){
     }
 }
 
+//main function
 int main() {
-    string filename = "Traffic_Crashes.csv";
-    vector<crashData> crashdata;
-    bHash crashDataMap;
-    RBTree RbtreeData;
-    parseCSV(filename, crashdata, crashDataMap, RbtreeData);
-    menu(crashDataMap, RbtreeData);
+    string filename = "Traffic_Crashes.csv"; //hold filename
+    vector<crashData> crashdata; //vector of crashData instance
+    bHash crashDataMap; //create hashmap instance
+    RBTree RbtreeData; //create R&B tree instance
+    parseCSV(filename, crashdata, crashDataMap, RbtreeData); //parse the data
+    menu(crashDataMap, RbtreeData);  //menu function
+
+    //for testing
     //createGraphHash(crashDataMap);
     //createGraphRB(RbtreeData);
 
-//    cout << "Choose an option: " << endl;
-//    cout << "Option 1: Hash Map Data Structure" << endl;
-//    cout << "Option 2: Red and Black Tree Structure" << endl;
-//    int option;
-//    cout << "Enter option (1 or 2): " << endl;
-//    cin >> option;
-//    if(option == 1) {
-//        cout << "Generating Map Using Hash Map..." << endl;
-//        createGraphHash(crashDataMap);
-//    }
-//    if(option == 2) {
-//        cout << "Generating Map Using Red and Black Tree..." << endl;
-//        createGraphRB(RbtreeData);
-//    }
-//    else{
-//        cout << "Invalid choice. Please enter 1 or 2." << endl;
-//        menu(crashDataMap, RbtreeData);
-//    }
-
-//     Print the data from the vector (retaining original functionality)
-//    for (const auto& data : crashdata) {
-//        cout << "Case Number: " << data.caseNumber
-//             << ", Latitude: " << data.latitude
-//             << ", Longitude: " << data.longitude
-//             << ", Total People: " << data.totalPeople
-//             << ", Crash Day: " << data.crashDay << endl;
-//    }
-//     Print the size of the hashmap
-    //cout << "Total items in the hashmap: " << crashDataMap.GetTotalItems() << endl;
-//    crashDataMap.FindLatLon(216018195);
-//    crashDataMap.FindLatLon(220006661);
-//    crashDataMap.FindLatLon(220012025);
-//    NodePtr resultNode = RbtreeData.searchTree(216019195);
-//    cout << get<0>(resultNode->values) << " " << get<1>(resultNode->values) << endl;
-//
-//     Optionally, you can interact with the crashDataMap hashmap as needed
-//     Example: crashDataMap.PrintTable();
-//
     return 0;
 }
